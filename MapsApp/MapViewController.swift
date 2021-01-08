@@ -10,47 +10,60 @@ import MapKit
 import CoreLocation
 
 class MapViewController: UIViewController {
-
+    
+    // MARK: - Outlets
+    
+    @IBOutlet weak var favouritesView: UIView!
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var mapsSettingsView: UIView!
-    @IBOutlet weak var returnBackButton: UIButton!
+    @IBOutlet weak var mapsSettingsButtonsView: UIView!
+    
+    
+    // MARK: - Properties
     
     let locationManager = CLLocationManager()
     let regionRadius = 1000.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        mapsSettingsView.layer.cornerRadius = 8
         
+        setupUI()
         checkLocationServices()
     }
     
     
+    // MARK: - Actions
+    
     @IBAction func returnBackToUserLocation(_ sender: Any) {
+        mapView.setUserTrackingMode(.follow, animated: true)
+    }
+    
+    
+    // MARK: - Helpers
+    
+    func setupUI() {
+        mapsSettingsButtonsView.layer.cornerRadius = 8
+        mapsSettingsButtonsView.layer.shadowColor = UIColor.lightGray.cgColor
+        mapsSettingsButtonsView.layer.shadowOpacity = 1
+        mapsSettingsButtonsView.layer.shadowOffset = .zero
+        mapsSettingsButtonsView.layer.shadowRadius = 4
         
-    }
-    
-    
-    func setupLocationManager() {
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-    }
-    
-    func centerViewOnUserLocation() {
-        if let location = locationManager.location?.coordinate {
-            let region = MKCoordinateRegion.init(center: location, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
-            mapView.setRegion(region, animated: true)
-        }
+        favouritesView.layer.cornerRadius = 16
+        searchBar.backgroundColor = .none
     }
     
     func checkLocationServices() {
-        if CLLocationManager.locationServicesEnabled(){
+        if CLLocationManager.locationServicesEnabled() {
             setupLocationManager()
             checkLocationAuthorization()
         } else {
             // let the user know that they have to turn this on
         }
+    }
+    
+    func setupLocationManager() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
     func checkLocationAuthorization() {
@@ -73,10 +86,19 @@ class MapViewController: UIViewController {
             locationManager.requestWhenInUseAuthorization()
         }
     }
+    
+    func centerViewOnUserLocation() {
+        if let location = locationManager.location?.coordinate {
+            let region = MKCoordinateRegion.init(center: location, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+            mapView.setRegion(region, animated: true)
+        }
+    }
 }
 
 
-extension MapViewController:CLLocationManagerDelegate {
+// MARK: - Location Manager Delegate
+
+extension MapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
@@ -90,4 +112,24 @@ extension MapViewController:CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         checkLocationAuthorization()
     }
+}
+
+
+// MARK: - Navigation
+
+extension MapViewController {
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? MapsSettingsViewController {
+            destination.delegate = self
+        }
+    }
+}
+
+extension MapViewController: MapsSettingsViewControllerProtocol {
+    
+    func didUpdateMapType(_ viewController: UIViewController, new mapType: MKMapType) {
+        mapView.mapType = mapType
+    }
+    
 }
