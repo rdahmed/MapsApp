@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 
-protocol MapsSettingsViewControllerProtocol: AnyObject {
+protocol MapsSettingsViewControllerDelegate: AnyObject {
     func didUpdateMapType(_ viewController: UIViewController, new mapType: MKMapType)
 }
 
@@ -19,10 +19,9 @@ class MapsSettingsViewController: UIViewController {
     @IBOutlet weak var mapsSettingsView: UIView!
     @IBOutlet weak var mapTypesSegmentedControl: UISegmentedControl!
     
-    
     // MARK: - Properties
     
-    weak var delegate: MapsSettingsViewControllerProtocol?
+    weak var delegate: MapsSettingsViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,17 +29,16 @@ class MapsSettingsViewController: UIViewController {
         setupUI()
     }
     
-    
     // MARK: - Helpers
     
     func setupUI() {
         mapsSettingsView.layer.cornerRadius = 16
     }
     
-    
     // MARK: - Actions
 
     @IBAction func close(_ sender: Any) {
+        delegate?.didUpdateMapType(self, new: .standard)
         dismiss(animated: true)
     }
     
@@ -49,6 +47,3 @@ class MapsSettingsViewController: UIViewController {
         delegate?.didUpdateMapType(self, new: type)
     }
 }
-
-
-
