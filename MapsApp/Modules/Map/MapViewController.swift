@@ -13,17 +13,17 @@ class MapViewController: UIViewController {
     
     // MARK: - Outlets
     
-    @IBOutlet weak var favoritesView: UIView!
-    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var settingsButtonContainerView: UIView!
+    @IBOutlet weak var favoritesView: UIView!
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
     
     // MARK: - Properties
     
-    let locationManager = CLLocationManager()
+    private let locationManager = CLLocationManager()
     private let regionRadius = 1000.0
-    lazy var favoriteLocations: [FavoriteLocation] = []
+    private lazy var favoriteLocations: [FavoriteLocation] = []
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,8 +59,8 @@ class MapViewController: UIViewController {
         settingsButtonContainerView.layer.shadowOffset = .zero
         settingsButtonContainerView.layer.shadowRadius = 4
         
-        searchBar.backgroundColor = .none
         favoritesView.layer.cornerRadius = 16
+        searchBar.backgroundColor = .none
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -129,10 +129,7 @@ extension MapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        let latitude = location.coordinate.latitude
-        let longitude = location.coordinate.longitude
-        let center = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        let region = MKCoordinateRegion.init(center: center, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+        let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
         mapView.setRegion(region, animated: true)
     }
     
@@ -153,9 +150,14 @@ extension MapViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? MapsSettingsViewController {
             destination.delegate = self
+        } else if let destination = segue.destination as? SeeAllFavoritesViewController {
+            destination.favouriteLocations = self.favoriteLocations
+            destination.delegate = self
         }
     }
 }
+
+// MARK: - MapsSettingsViewControllerDelegate
 
 extension MapViewController: MapsSettingsViewControllerDelegate {
     
@@ -164,7 +166,17 @@ extension MapViewController: MapsSettingsViewControllerDelegate {
     }
 }
 
-// MARK: - Collection View Data Source & Delegate
+// MARK: - FavoritesDelegate
+
+extension MapViewController: FavoritesTableViewDelegate {
+    
+    func didTapLocation(_ viewController: SeeAllFavoritesViewController, _ location: FavoriteLocation) {
+        viewController.dismiss(animated: true)
+        animateToLocation(location)
+    }
+}
+
+// MARK: - UICollectionViewDataSource
 
 extension MapViewController: UICollectionViewDataSource {
     
@@ -184,14 +196,16 @@ extension MapViewController: UICollectionViewDataSource {
         } else {
             // User Locations
             let location = favoriteLocations[indexPath.item - 1]
+            cell.locationNameLabel.text = location.displayTitle
             cell.typeImageView.image = UIImage(named: location.iconName ?? "")
-            cell.locationNameLabel.text = location.title
+            
         }
         
         return cell
     }
 }
 
+// MARK: - UICollectionViewDelegate
 
 extension MapViewController: UICollectionViewDelegate {
     
@@ -204,6 +218,8 @@ extension MapViewController: UICollectionViewDelegate {
         }
     }
 }
+
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension MapViewController: UICollectionViewDelegateFlowLayout {
     

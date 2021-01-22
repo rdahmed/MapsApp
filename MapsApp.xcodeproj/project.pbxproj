@@ -10,6 +10,8 @@
 		D351B2D125B5AD6100570B5E /* FavoriteLocationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351B2D025B5AD6100570B5E /* FavoriteLocationCollectionViewCell.swift */; };
 		D351B2DA25B5DF1100570B5E /* FavoriteLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351B2D925B5DF1100570B5E /* FavoriteLocation.swift */; };
 		D351B2DE25B5DF7700570B5E /* NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351B2DD25B5DF7700570B5E /* NotificationCenter.swift */; };
+		D3A04DA025B87BEC0030C639 /* SeeAllFavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A04D9F25B87BEC0030C639 /* SeeAllFavoritesViewController.swift */; };
+		D3A04DA325B9D3BA0030C639 /* FavoritLocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A04DA225B9D3BA0030C639 /* FavoritLocationTableViewCell.swift */; };
 		D3BDD0E925AC7228008A2E3A /* AddFavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BDD0E825AC7228008A2E3A /* AddFavoriteViewController.swift */; };
 		D3BDD0ED25AE05E4008A2E3A /* FavoriteDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BDD0EC25AE05E4008A2E3A /* FavoriteDetailsViewController.swift */; };
 		D3BDD0F025B056F4008A2E3A /* FavoriteDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BDD0EF25B056F4008A2E3A /* FavoriteDetailsTableViewController.swift */; };
@@ -27,6 +29,8 @@
 		D351B2D025B5AD6100570B5E /* FavoriteLocationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteLocationCollectionViewCell.swift; sourceTree = "<group>"; };
 		D351B2D925B5DF1100570B5E /* FavoriteLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteLocation.swift; sourceTree = "<group>"; };
 		D351B2DD25B5DF7700570B5E /* NotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenter.swift; sourceTree = "<group>"; };
+		D3A04D9F25B87BEC0030C639 /* SeeAllFavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SeeAllFavoritesViewController.swift; path = MapsApp/Modules/SeeAllFavoritesViewController.swift; sourceTree = SOURCE_ROOT; };
+		D3A04DA225B9D3BA0030C639 /* FavoritLocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FavoritLocationTableViewCell.swift; path = MapsApp/Modules/FavoritLocationTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		D3BDD0E825AC7228008A2E3A /* AddFavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFavoriteViewController.swift; sourceTree = "<group>"; };
 		D3BDD0EC25AE05E4008A2E3A /* FavoriteDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDetailsViewController.swift; sourceTree = "<group>"; };
 		D3BDD0EF25B056F4008A2E3A /* FavoriteDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDetailsTableViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +107,8 @@
 		D3BDD10925B59A69008A2E3A /* AddFavorite */ = {
 			isa = PBXGroup;
 			children = (
+				D3A04D9F25B87BEC0030C639 /* SeeAllFavoritesViewController.swift */,
+				D3A04DA225B9D3BA0030C639 /* FavoritLocationTableViewCell.swift */,
 				D3BDD0E825AC7228008A2E3A /* AddFavoriteViewController.swift */,
 				D3BDD0EC25AE05E4008A2E3A /* FavoriteDetailsViewController.swift */,
 				D3BDD0EF25B056F4008A2E3A /* FavoriteDetailsTableViewController.swift */,
@@ -119,12 +125,12 @@
 			path = MapSettings;
 			sourceTree = "<group>";
 		};
-		D3BDD11025B59F7F008A2E3A /* Model */ = {
+		D3BDD11025B59F7F008A2E3A /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				D351B2D925B5DF1100570B5E /* FavoriteLocation.swift */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		D3E2731825964D1A00A055CE = {
@@ -147,7 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				D3BDD10525B59A4F008A2E3A /* App */,
-				D3BDD11025B59F7F008A2E3A /* Model */,
+				D3BDD11025B59F7F008A2E3A /* Models */,
 				D3BDD10725B59A5A008A2E3A /* Modules */,
 				D351B2DC25B5DF6600570B5E /* Helpers */,
 				D3BDD10625B59A53008A2E3A /* SupportingFiles */,
@@ -231,10 +237,12 @@
 				D3BDD0ED25AE05E4008A2E3A /* FavoriteDetailsViewController.swift in Sources */,
 				D3BDD0E925AC7228008A2E3A /* AddFavoriteViewController.swift in Sources */,
 				D351B2DA25B5DF1100570B5E /* FavoriteLocation.swift in Sources */,
+				D3A04DA025B87BEC0030C639 /* SeeAllFavoritesViewController.swift in Sources */,
 				D3E2732525964D1A00A055CE /* AppDelegate.swift in Sources */,
 				D351B2D125B5AD6100570B5E /* FavoriteLocationCollectionViewCell.swift in Sources */,
 				D3E2733F2596628C00A055CE /* MapViewController.swift in Sources */,
 				D3E2732725964D1A00A055CE /* SceneDelegate.swift in Sources */,
+				D3A04DA325B9D3BA0030C639 /* FavoritLocationTableViewCell.swift in Sources */,
 				D3BDD0F425B05757008A2E3A /* IconPickerTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

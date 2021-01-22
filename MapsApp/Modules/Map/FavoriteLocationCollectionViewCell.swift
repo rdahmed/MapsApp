@@ -12,8 +12,4 @@ class FavoriteLocationCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var typeImageView: UIImageView!
     @IBOutlet weak var locationNameLabel: UILabel!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
 }

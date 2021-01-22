@@ -55,8 +55,11 @@ class AddFavoriteViewController: UIViewController, CLLocationManagerDelegate, MK
     func centerViewOnUserLocation() {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        if let location = locationManager.location?.coordinate {
-            let region = MKCoordinateRegion(center: location, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+        if let coordinate = locationManager.location?.coordinate {
+            let region = MKCoordinateRegion(
+                center: coordinate,
+                latitudinalMeters: regionRadius,
+                longitudinalMeters: regionRadius)
             mapView.setRegion(region, animated: true)
         }
     }

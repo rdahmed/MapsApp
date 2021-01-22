@@ -31,7 +31,7 @@ class FavoriteDetailsTableViewController: UITableViewController {
     // MARK: - Helpers
     
     private func setupUI(with location: FavoriteLocation) {
-        locationLabel.text = "\(location.coordinate.latitude), \(location.coordinate.longitude)"
+        locationLabel.text = location.cooridnateString
         locationNameTextField.text = location.title
         iconImageView.image = UIImage(named: location.iconName ?? "")
     }

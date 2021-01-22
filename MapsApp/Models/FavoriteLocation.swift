@@ -16,15 +16,20 @@ class FavoriteLocation: NSObject, MKAnnotation {
     var subtitle: String?
     var iconName: String?
     
-    init(coordinate: CLLocationCoordinate2D,
-         title: String? = nil,
-         subtitle: String? = nil,
-         iconName: String? = nil)
-    {
+    var displayTitle: String? {
+        if let title = title {
+            return title.isEmpty ? cooridnateString : title
+        } else {
+            return nil
+        }
+    }
+    
+    var cooridnateString: String {
+        String(format: "%6f, %6f", coordinate.latitude, coordinate.longitude)
+    }
+    
+    init(coordinate: CLLocationCoordinate2D) {
         self.coordinate = coordinate
-        self.title = title
-        self.subtitle = subtitle
-        self.iconName = iconName
     }
     
 }
