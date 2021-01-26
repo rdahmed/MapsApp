@@ -36,6 +36,22 @@ class MapViewController: UIViewController {
             selector: #selector(addToFavorites),
             name: .favoriteLocationAdded,
             object: nil)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Actions
@@ -50,6 +66,19 @@ class MapViewController: UIViewController {
         collectionView.reloadData()
     }
     
+    @objc func keyboardWillShow(_ notification: NSNotification) {
+        guard let keyboardSize = (notification
+                                    .userInfo?[UIResponder.keyboardFrameEndUserInfoKey]
+                                    as? NSValue)?.cgRectValue
+        else { return }
+        
+        self.view.frame.origin.y = 0 - keyboardSize.height
+    }
+    
+    @objc func keyboardWillHide(_ notification: NSNotification) {
+        self.view.frame.origin.y = 0
+    }
+    
     // MARK: - UI Helpers
     
     func setupUI() {
@@ -60,6 +89,7 @@ class MapViewController: UIViewController {
         settingsButtonContainerView.layer.shadowRadius = 4
         
         favoritesView.layer.cornerRadius = 16
+        searchBar.delegate = self
         searchBar.backgroundColor = .none
         
         collectionView.dataSource = self
@@ -120,7 +150,6 @@ class MapViewController: UIViewController {
     func clearMapViewAnnotations() {
         mapView.removeAnnotations(mapView.annotations)
     }
-    
 }
 
 // MARK: - Location Manager Delegate
@@ -140,6 +169,7 @@ extension MapViewController: CLLocationManagerDelegate {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         clearMapViewAnnotations()
+        searchBar.resignFirstResponder()
     }
 }
 
@@ -164,6 +194,17 @@ extension MapViewController: MapsSettingsViewControllerDelegate {
     func didUpdateMapType(_ viewController: UIViewController, new mapType: MKMapType) {
         mapView.mapType = mapType
     }
+}
+
+// MARK: - SearchBarDelegate
+
+extension MapViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
+    
 }
 
 // MARK: - FavoritesDelegate
@@ -234,4 +275,10 @@ extension MapViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         .zero
     }
+}
+
+// MARK: - Notification Center
+
+extension MapViewController {
+    
 }

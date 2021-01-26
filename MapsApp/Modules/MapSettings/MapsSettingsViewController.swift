@@ -38,7 +38,6 @@ class MapsSettingsViewController: UIViewController {
     // MARK: - Actions
 
     @IBAction func close(_ sender: Any) {
-        delegate?.didUpdateMapType(self, new: .standard)
         dismiss(animated: true)
     }
     
