@@ -28,6 +28,12 @@ class FavoriteDetailsTableViewController: UITableViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        locationNameTextField.becomeFirstResponder()
+    }
+    
     // MARK: - Helpers
     
     private func setupUI(with location: FavoriteLocation) {
@@ -50,7 +56,6 @@ class FavoriteDetailsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
 }
 
 // MARK: - Icon Picker Table View Delegate

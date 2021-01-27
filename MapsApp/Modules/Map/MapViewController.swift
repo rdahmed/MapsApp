@@ -36,22 +36,6 @@ class MapViewController: UIViewController {
             selector: #selector(addToFavorites),
             name: .favoriteLocationAdded,
             object: nil)
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillShow),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil)
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillHide),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil)
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Actions
@@ -64,19 +48,6 @@ class MapViewController: UIViewController {
         guard let favoriteLocation = notification.object as? FavoriteLocation else { return }
         favoriteLocations.append(favoriteLocation)
         collectionView.reloadData()
-    }
-    
-    @objc func keyboardWillShow(_ notification: NSNotification) {
-        guard let keyboardSize = (notification
-                                    .userInfo?[UIResponder.keyboardFrameEndUserInfoKey]
-                                    as? NSValue)?.cgRectValue
-        else { return }
-        
-        self.view.frame.origin.y = 0 - keyboardSize.height
-    }
-    
-    @objc func keyboardWillHide(_ notification: NSNotification) {
-        self.view.frame.origin.y = 0
     }
     
     // MARK: - UI Helpers
@@ -179,9 +150,10 @@ extension MapViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? MapsSettingsViewController {
+            destination.selectedIndex = mapView.mapType.rawValue
             destination.delegate = self
         } else if let destination = segue.destination as? SeeAllFavoritesViewController {
-            destination.favouriteLocations = self.favoriteLocations
+            destination.favoriteLocations = self.favoriteLocations
             destination.delegate = self
         }
     }
@@ -203,8 +175,7 @@ extension MapViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
-    
-    
+
 }
 
 // MARK: - FavoritesDelegate
@@ -238,7 +209,7 @@ extension MapViewController: UICollectionViewDataSource {
             // User Locations
             let location = favoriteLocations[indexPath.item - 1]
             cell.locationNameLabel.text = location.displayTitle
-            cell.typeImageView.image = UIImage(named: location.iconName ?? "")
+            cell.typeImageView.image = UIImage(named: location.iconName ?? "Folder")
             
         }
         
@@ -275,10 +246,4 @@ extension MapViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         .zero
     }
-}
-
-// MARK: - Notification Center
-
-extension MapViewController {
-    
 }

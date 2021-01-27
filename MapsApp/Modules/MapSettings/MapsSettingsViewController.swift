@@ -22,11 +22,18 @@ class MapsSettingsViewController: UIViewController {
     // MARK: - Properties
     
     weak var delegate: MapsSettingsViewControllerDelegate?
+    var selectedIndex: UInt?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        mapTypesSegmentedControl.selectedSegmentIndex = Int(selectedIndex ?? 0)
     }
     
     // MARK: - Helpers
@@ -37,6 +44,10 @@ class MapsSettingsViewController: UIViewController {
     
     // MARK: - Actions
 
+    @IBAction func touchOutside(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    
     @IBAction func close(_ sender: Any) {
         dismiss(animated: true)
     }

@@ -21,7 +21,7 @@ class SeeAllFavoritesViewController: UIViewController {
     // MARK: - Properties
     
     weak var delegate: FavoritesTableViewDelegate?
-    var favouriteLocations = [FavoriteLocation]()
+    var favoriteLocations = [FavoriteLocation]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +33,7 @@ class SeeAllFavoritesViewController: UIViewController {
         favoriteLocationsTableView.dataSource = self
         favoriteLocationsTableView.delegate = self
         favoriteLocationsTableView.tableHeaderView = UIView()
+        favoriteLocationsTableView.tableFooterView = UIView()
     }
     
     @IBAction func close(_ sender: Any) {
@@ -45,24 +46,24 @@ class SeeAllFavoritesViewController: UIViewController {
 extension SeeAllFavoritesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        favoriteLocationsTableView.isHidden = favouriteLocations.isEmpty
-        return favouriteLocations.count
+        favoriteLocationsTableView.isHidden = favoriteLocations.isEmpty
+        return favoriteLocations.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "FavoriteCell", for: indexPath) as? FavoritLocationTableViewCell else {
             return UITableViewCell()
         }
-        let location = favouriteLocations[indexPath.row]
+        let location = favoriteLocations[indexPath.row]
         
-        cell.locationImageView.image = UIImage(named: location.iconName ?? "")
+        cell.locationImageView.image = UIImage(named: location.iconName ?? "Folder")
         cell.locationLabel.text = location.displayTitle
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let location = favouriteLocations[indexPath.row]
+        let location = favoriteLocations[indexPath.row]
         delegate?.didTapLocation(self, location)
     }
 }
