@@ -3,13 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		9A46D49E617A2BFCDE1F5BEC /* Pods_MapsApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D38AFFCAD7C28C1665EE42C9 /* Pods_MapsApp.framework */; };
 		D351B2D125B5AD6100570B5E /* FavoriteLocationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351B2D025B5AD6100570B5E /* FavoriteLocationCollectionViewCell.swift */; };
-		D351B2DA25B5DF1100570B5E /* FavoriteLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351B2D925B5DF1100570B5E /* FavoriteLocation.swift */; };
+		D351B2DA25B5DF1100570B5E /* LocationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351B2D925B5DF1100570B5E /* LocationModels.swift */; };
 		D351B2DE25B5DF7700570B5E /* NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351B2DD25B5DF7700570B5E /* NotificationCenter.swift */; };
 		D3A04DA025B87BEC0030C639 /* SeeAllFavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A04D9F25B87BEC0030C639 /* SeeAllFavoritesViewController.swift */; };
 		D3A04DA325B9D3BA0030C639 /* FavoritLocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A04DA225B9D3BA0030C639 /* FavoritLocationTableViewCell.swift */; };
@@ -29,7 +29,7 @@
 /* Begin PBXFileReference section */
 		CE6ABA200EE41E1F34443931 /* Pods-MapsApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapsApp.release.xcconfig"; path = "Target Support Files/Pods-MapsApp/Pods-MapsApp.release.xcconfig"; sourceTree = "<group>"; };
 		D351B2D025B5AD6100570B5E /* FavoriteLocationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteLocationCollectionViewCell.swift; sourceTree = "<group>"; };
-		D351B2D925B5DF1100570B5E /* FavoriteLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteLocation.swift; sourceTree = "<group>"; };
+		D351B2D925B5DF1100570B5E /* LocationModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationModels.swift; sourceTree = "<group>"; };
 		D351B2DD25B5DF7700570B5E /* NotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenter.swift; sourceTree = "<group>"; };
 		D38AFFCAD7C28C1665EE42C9 /* Pods_MapsApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MapsApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3A04D9F25B87BEC0030C639 /* SeeAllFavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SeeAllFavoritesViewController.swift; path = MapsApp/Modules/SeeAllFavoritesViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -68,7 +68,6 @@
 				D98140B2FB59B71EEF7AEAF6 /* Pods-MapsApp.debug.xcconfig */,
 				CE6ABA200EE41E1F34443931 /* Pods-MapsApp.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -143,7 +142,7 @@
 		D3BDD11025B59F7F008A2E3A /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D351B2D925B5DF1100570B5E /* FavoriteLocation.swift */,
+				D351B2D925B5DF1100570B5E /* LocationModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -305,7 +304,7 @@
 				D351B2DE25B5DF7700570B5E /* NotificationCenter.swift in Sources */,
 				D3BDD0ED25AE05E4008A2E3A /* FavoriteDetailsViewController.swift in Sources */,
 				D3BDD0E925AC7228008A2E3A /* AddFavoriteViewController.swift in Sources */,
-				D351B2DA25B5DF1100570B5E /* FavoriteLocation.swift in Sources */,
+				D351B2DA25B5DF1100570B5E /* LocationModels.swift in Sources */,
 				D3A04DA025B87BEC0030C639 /* SeeAllFavoritesViewController.swift in Sources */,
 				D3E2732525964D1A00A055CE /* AppDelegate.swift in Sources */,
 				D351B2D125B5AD6100570B5E /* FavoriteLocationCollectionViewCell.swift in Sources */,

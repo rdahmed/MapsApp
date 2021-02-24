@@ -8,7 +8,7 @@
 import UIKit
 
 protocol FavoritesTableViewDelegate: class {
-    func didTapLocation(_ viewController: SeeAllFavoritesViewController, _ location: FavoriteLocation)
+    func didTapLocation(_ viewController: SeeAllFavoritesViewController, _ location: LocationUIModel)
 }
 
 class SeeAllFavoritesViewController: UIViewController {
@@ -21,7 +21,7 @@ class SeeAllFavoritesViewController: UIViewController {
     // MARK: - Properties
     
     weak var delegate: FavoritesTableViewDelegate?
-    var favoriteLocations = [FavoriteLocation]()
+    var favoriteLocations = [LocationUIModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()

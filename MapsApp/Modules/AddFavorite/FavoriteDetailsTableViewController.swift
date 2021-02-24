@@ -18,7 +18,7 @@ class FavoriteDetailsTableViewController: UITableViewController {
     
     // MARK: - Properties
     
-    var favoriteLocation: FavoriteLocation?
+    var favoriteLocation: LocationUIModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +36,7 @@ class FavoriteDetailsTableViewController: UITableViewController {
     
     // MARK: - Helpers
     
-    private func setupUI(with location: FavoriteLocation) {
+    private func setupUI(with location: LocationUIModel) {
         locationLabel.text = location.cooridnateString
         locationNameTextField.text = location.title
         iconImageView.image = UIImage(named: location.iconName ?? "")

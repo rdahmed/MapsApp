@@ -13,7 +13,7 @@ class FavoriteDetailsViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Properties
     
     private var tableViewController: FavoriteDetailsTableViewController?
-    var favoriteLocation: FavoriteLocation?
+    var favoriteLocation: LocationUIModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()

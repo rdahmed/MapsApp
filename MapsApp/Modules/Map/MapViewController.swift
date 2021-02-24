@@ -23,13 +23,14 @@ class MapViewController: UIViewController {
     
     private let locationManager = CLLocationManager()
     private let regionRadius = 1000.0
-    private lazy var favoriteLocations: [FavoriteLocation] = []
+    private lazy var locations: [LocationUIModel] = []
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
         checkLocationServices()
+        fetchLocation()
         
         NotificationCenter.default.addObserver(
             self,
@@ -45,9 +46,35 @@ class MapViewController: UIViewController {
     }
     
     @objc func addToFavorites(_ notification: Notification) {
-        guard let favoriteLocation = notification.object as? FavoriteLocation else { return }
-        favoriteLocations.append(favoriteLocation)
+        guard let favoriteLocation = notification.object as? LocationUIModel else { return }
+        locations.append(favoriteLocation)
         collectionView.reloadData()
+    }
+    
+    func fetchLocation() {
+        
+        guard let url = URL(string: "https://run.mocky.io/v3/b5086734-076f-4042-831f-2fb1c6f66ac8") else {
+            print("Not valid URL")
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            
+            do {
+                let apiModels = try JSONDecoder().decode([LocationAPIModel].self, from: data!)
+                let uiModels = apiModels.map { LocationUIModel($0) }
+                self.locations = uiModels
+                
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+                
+            } catch {
+                print(error)
+            }
+        }
+        
+        task.resume()
     }
     
     // MARK: - UI Helpers
@@ -112,7 +139,7 @@ class MapViewController: UIViewController {
         mapView.setRegion(region, animated: true)
     }
     
-    func animateToLocation(_ location: FavoriteLocation) {
+    func animateToLocation(_ location: LocationUIModel) {
         mapView.removeAnnotations(mapView.annotations)
         mapView.addAnnotation(location)
         centerMapOnCoordinate(location.coordinate)
@@ -153,7 +180,7 @@ extension MapViewController {
             destination.selectedIndex = mapView.mapType.rawValue
             destination.delegate = self
         } else if let destination = segue.destination as? SeeAllFavoritesViewController {
-            destination.favoriteLocations = self.favoriteLocations
+            destination.favoriteLocations = self.locations
             destination.delegate = self
         }
     }
@@ -182,7 +209,7 @@ extension MapViewController: UISearchBarDelegate {
 
 extension MapViewController: FavoritesTableViewDelegate {
     
-    func didTapLocation(_ viewController: SeeAllFavoritesViewController, _ location: FavoriteLocation) {
+    func didTapLocation(_ viewController: SeeAllFavoritesViewController, _ location: LocationUIModel) {
         viewController.dismiss(animated: true)
         animateToLocation(location)
     }
@@ -193,7 +220,7 @@ extension MapViewController: FavoritesTableViewDelegate {
 extension MapViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        1 + favoriteLocations.count
+        1 + locations.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -207,9 +234,9 @@ extension MapViewController: UICollectionViewDataSource {
        
         } else {
             // User Locations
-            let location = favoriteLocations[indexPath.item - 1]
+            let location = locations[indexPath.item - 1]
             cell.locationNameLabel.text = location.displayTitle
-            cell.typeImageView.image = UIImage(named: location.iconName ?? "Folder")
+            cell.typeImageView.image = UIImage(named: location.iconName ?? "") ?? UIImage(named: "Folder")
             
         }
         
@@ -225,7 +252,7 @@ extension MapViewController: UICollectionViewDelegate {
         if indexPath.item == 0 {
             performSegue(withIdentifier: "addFavoriteSegue", sender: nil)
         } else {
-            let location = favoriteLocations[indexPath.row - 1]
+            let location = locations[indexPath.row - 1]
             animateToLocation(location)
         }
     }

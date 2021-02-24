@@ -7,6 +7,7 @@
 
 import UIKit
 import MapKit
+
 class AddFavoriteViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     // MARK: - Outlets
@@ -18,9 +19,9 @@ class AddFavoriteViewController: UIViewController, CLLocationManagerDelegate, MK
     
     let locationManager = CLLocationManager()
     let regionRadius = 1000.0
-    lazy var location: FavoriteLocation? = {
+    lazy var location: LocationUIModel? = {
         guard let coordinate = locationManager.location?.coordinate else { return nil }
-        let location = FavoriteLocation(coordinate: coordinate)
+        let location = LocationUIModel(coordinate: coordinate)
         return location
     }()
     
